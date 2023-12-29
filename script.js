@@ -21,6 +21,10 @@ let gameStarted = false;
 
 startButton.addEventListener('click', startGame);
 
+// Add touch events for mobile devices
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchend', handleTouchEnd, false);
+
 function startGame() {
     gameStarted = true;
     startButton.style.display = 'none'; // Hide the start button
@@ -45,6 +49,17 @@ document.addEventListener('keyup', (event) => {
         isMovingDown = false;
     }
 });
+
+function handleTouchStart(e) {
+    const touchY = e.touches[0].clientY;
+    isMovingUp = touchY < window.innerHeight / 2;
+    isMovingDown = touchY >= window.innerHeight / 2;
+}
+
+function handleTouchEnd() {
+    isMovingUp = false;
+    isMovingDown = false;
+}
 
 function update() {
     if (gameStarted) {
